@@ -50,8 +50,8 @@ class ProfileFragment : Fragment() {
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK &&requestCode== CODE_FOR_INTENT){
-            imageUri=data?.data
+        if (resultCode == RESULT_OK && requestCode == CODE_FOR_INTENT) {
+            imageUri = data?.data
             binding.imgProfile.setImageURI(imageUri)
         }
     }

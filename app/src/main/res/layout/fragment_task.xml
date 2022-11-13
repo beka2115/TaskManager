@@ -4,9 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     tools:context=".ui.task.TaskFragment">
 
     <EditText
+        android:paddingVertical="12dp"
+        android:background="@drawable/bg_edit"
         android:id="@+id/edit_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,6 +23,8 @@
         tools:ignore="Autofill,TextFields" />
 
     <EditText
+        android:paddingVertical="12dp"
+        android:background="@drawable/bg_edit"
         android:id="@+id/edit_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
