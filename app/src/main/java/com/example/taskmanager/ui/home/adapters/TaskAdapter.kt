@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskmanager.databinding.ItemHomeBinding
-import com.example.taskmanager.models.Task
+import com.example.taskmanager.data.models.Task
 
 class TaskAdapter() :
     RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
@@ -30,7 +30,7 @@ class TaskAdapter() :
     override fun getItemCount(): Int {
         return taskList.size
     }
-    fun addTask(task:Task){
+    fun addTask(task: Task){
         taskList.add(0,task)
         notifyItemChanged(0)
 
@@ -38,7 +38,7 @@ class TaskAdapter() :
 
     inner class TaskViewHolder(private val binding: ItemHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
-            fun bind(task:Task){
+            fun bind(task: Task){
                 binding.textTitle.text=task.title
                 binding.textDesc.text=task.desc
             }

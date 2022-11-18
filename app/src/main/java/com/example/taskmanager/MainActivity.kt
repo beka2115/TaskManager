@@ -10,12 +10,14 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.taskmanager.data.local.Pref
 import com.example.taskmanager.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var pref: Pref
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,9 +26,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val navView: BottomNavigationView = binding.navView
+        pref = Pref(this)
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         navController.navigate(R.id.onBoardingFragment)
+        if (!pref.isOnBoardingShow()) {
+            navController.navigate(R.id.onBoardingFragment)
+        }
+
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_home,

@@ -7,13 +7,13 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.taskmanager.databinding.ItemOnBoardingBinding
-import com.example.taskmanager.models.OnBoarding
+import com.example.taskmanager.data.models.OnBoarding
 
 class OnBoardingAdapter(
-    val onClick: (view: View) -> Unit
+    val onClick: () -> Unit
 ) : RecyclerView.Adapter<OnBoardingAdapter.OnBoardingViewHolder>() {
 
-    private val arrayList = arrayListOf<OnBoarding>(
+    private val arrayList = arrayListOf(
         OnBoarding(
             "https://www.nicepng.com/png/full/190-1906200_hello-png.png",
             "It's Task Manager"
@@ -53,11 +53,11 @@ class OnBoardingAdapter(
     inner class OnBoardingViewHolder(private val binding: ItemOnBoardingBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(onBoarding: OnBoarding) {
-            binding.textSkip.setOnClickListener {
-                onClick(binding.textSkip)
+           binding.textSkip.setOnClickListener {
+                onClick()
             }
             binding.btnStart.setOnClickListener {
-                onClick(binding.btnStart)
+                onClick()
             }
             binding.btnStart.isVisible = adapterPosition == arrayList.lastIndex
             binding.textSkip.isVisible = adapterPosition != arrayList.lastIndex

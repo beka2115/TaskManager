@@ -1,4 +1,4 @@
-package com.example.taskmanager.models
+package com.example.taskmanager.data.models
 
 data class OnBoarding(
     var image:String?=null,
