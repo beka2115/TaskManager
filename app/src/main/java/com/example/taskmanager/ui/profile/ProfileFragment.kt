@@ -9,14 +9,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.taskmanager.databinding.FragmentProfileBinding
 
 
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
     private var imageUri: Uri? = null
-
-
+    private lateinit var galeryIntent:ActivityResultLauncher<Intent>
     companion object {
         const val CODE_FOR_INTENT = 2006
     }
@@ -32,9 +33,13 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.imgProfile.setOnClickListener {
-            preopenImageGalery()
+        galeryIntent=registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
 
+        }
+
+        binding.imgProfile.setOnClickListener {
+            //galeryIntent.launch(Intent(""))
+            preopenImageGalery()
         }
 
 

@@ -1,5 +1,6 @@
 package com.example.taskmanager.ui.home.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -23,17 +24,23 @@ class TaskAdapter() :
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        holder.bind(taskList.get(position))
+        holder.bind(taskList[position])
     }
 
     override fun getItemCount(): Int {
         return taskList.size
     }
+    fun addTask(task:Task){
+        taskList.add(0,task)
+        notifyItemChanged(0)
+
+    }
 
     inner class TaskViewHolder(private val binding: ItemHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
             fun bind(task:Task){
-
+                binding.textTitle.text=task.title
+                binding.textDesc.text=task.desc
             }
 
 
