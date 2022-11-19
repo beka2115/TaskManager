@@ -10,8 +10,11 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
+import com.example.taskmanager.R
 import com.example.taskmanager.data.local.Pref
 import com.example.taskmanager.databinding.FragmentProfileBinding
+import java.text.NumberFormat
+import java.text.ParsePosition
 
 
 class ProfileFragment : Fragment() {
@@ -34,9 +37,13 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         pref = Pref(requireContext())
-        binding.editText.setText(pref.takeEdittext())
+        binding.editText.setText(pref.takeEditText())
         binding.editText.addTextChangedListener {
             pref.saveEditText(binding.editText.text.toString())
+        }
+        binding.editAge.setText(pref.takeNumber())
+        binding.editAge.addTextChangedListener {
+            doSave()
         }
         saveAndShowPicture()
     }
@@ -55,6 +62,20 @@ class ProfileFragment : Fragment() {
         }
         Glide.with(binding.imgProfile).load(pref.takePicture()).into(binding.imgProfile)
 
+    }
+
+    private fun doSave() {
+        if (isNumeric(binding.editAge.text.toString())) {
+            pref.saveEditNum(binding.editAge.text.toString())
+        } else {
+            binding.editAge.error = getString(R.string.save_num_error)
+        }
+    }
+
+    private fun isNumeric(s: String): Boolean {
+        val pos = ParsePosition(0)
+        NumberFormat.getInstance().parse(s, pos)
+        return s.length == pos.index
     }
 }
 

@@ -20,7 +20,7 @@ class Pref(context: Context) {
         pref.edit().putString(SAVE_EDIT_TEXT, name).apply()
     }
 
-    fun takeEdittext(): String? {
+    fun takeEditText(): String? {
         return pref.getString(SAVE_EDIT_TEXT, "")
     }
 
@@ -32,9 +32,18 @@ class Pref(context: Context) {
         return pref.getString(PROFILE_PICTURE_KEY, "")
     }
 
+    fun saveEditNum(num: String) {
+        pref.edit().putString(SAVE_EDIT_NUMBER, num).apply()
+    }
+
+    fun takeNumber(): String? {
+        return pref.getString(SAVE_EDIT_NUMBER, "")
+    }
+
     companion object {
         private const val BOARDING_SHOW = "on_boarding_show"
         private const val SAVE_EDIT_TEXT = "save.text"
+        private const val SAVE_EDIT_NUMBER = "save.number"
         private const val PROFILE_PICTURE_KEY = "save.picture"
     }
 
