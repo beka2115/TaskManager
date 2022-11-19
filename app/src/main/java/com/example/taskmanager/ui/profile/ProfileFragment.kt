@@ -1,27 +1,27 @@
 package com.example.taskmanager.ui.profile
 
-import android.app.Activity.RESULT_OK
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.widget.addTextChangedListener
+import com.bumptech.glide.Glide
+import com.example.taskmanager.data.local.Pref
 import com.example.taskmanager.databinding.FragmentProfileBinding
 
 
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
-    private var imageUri: Uri? = null
-    private lateinit var galeryIntent:ActivityResultLauncher<Intent>
-    companion object {
-        const val CODE_FOR_INTENT = 2006
-    }
+    private lateinit var launcher: ActivityResultLauncher<String>
+    private lateinit var pref: Pref
 
+    companion object {
+        const val CODE_FOR_INTENT = "image/*"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,33 +33,31 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        galeryIntent=registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
-
+        pref = Pref(requireContext())
+        binding.editText.setText(pref.takeEdittext())
+        binding.editText.addTextChangedListener {
+            pref.saveEditText(binding.editText.text.toString())
         }
+        saveAndShowPicture()
+    }
+
+    private fun saveAndShowPicture() {
+        launcher =
+            registerForActivityResult(ActivityResultContracts.GetContent()) { imageUri: Uri? ->
+                if (imageUri != null) {
+                    pref.savePicture(imageUri.toString())
+                    binding.imgProfile.setImageURI(imageUri)
+                }
+            }
 
         binding.imgProfile.setOnClickListener {
-            //galeryIntent.launch(Intent(""))
-            preopenImageGalery()
+            launcher.launch(CODE_FOR_INTENT)
         }
-
+        Glide.with(binding.imgProfile).load(pref.takePicture()).into(binding.imgProfile)
 
     }
-
-    private fun preopenImageGalery() {
-        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
-            type = "image/*"
-            startActivityForResult(this, CODE_FOR_INTENT)
-        }
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK && requestCode == CODE_FOR_INTENT) {
-            imageUri = data?.data
-            binding.imgProfile.setImageURI(imageUri)
-        }
-    }
-
-
 }
+
+
+
+

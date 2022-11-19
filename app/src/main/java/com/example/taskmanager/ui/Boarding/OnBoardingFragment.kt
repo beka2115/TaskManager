@@ -20,6 +20,7 @@ class OnBoardingFragment : Fragment() {
     private lateinit var pref:Pref
 
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,12 +42,4 @@ class OnBoardingFragment : Fragment() {
 
 
     }
-
-   /* private fun onClick(view: View) {
-        pref.saveShowBoarding(true)
-        findNavController().navigateUp()
-
-    }*/
-
-
 }
