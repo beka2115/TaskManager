@@ -37,12 +37,13 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         pref = Pref(requireContext())
-        binding.editText.setText(pref.takeEditText())
-        binding.editText.addTextChangedListener {
-            pref.saveEditText(binding.editText.text.toString())
+        binding.textMaterialName.setText(pref.takeEditText())
+        //binding.editText.setText(pref.takeEditText())
+        binding.textMaterialName.addTextChangedListener {
+            pref.saveEditText(binding.textMaterialName.text.toString())
         }
-        binding.editAge.setText(pref.takeNumber())
-        binding.editAge.addTextChangedListener {
+        binding.textMaterialAge.setText(pref.takeNumber())
+        binding.textMaterialAge.addTextChangedListener {
             doSave()
         }
         saveAndShowPicture()
@@ -65,8 +66,9 @@ class ProfileFragment : Fragment() {
     }
 
     private fun doSave() {
-        if (isNumeric(binding.editAge.text.toString())) {
-            pref.saveEditNum(binding.editAge.text.toString())
+        if (isNumeric(binding.textMaterialAge.text.toString())) {
+            pref.saveEditNum(binding.textMaterialAge.text.toString())
+            binding.editAge.error = null
         } else {
             binding.editAge.error = getString(R.string.save_num_error)
         }

@@ -7,36 +7,46 @@
     android:animateLayoutChanges="true"
     tools:context=".ui.task.TaskFragment">
 
-    <EditText
-        android:paddingVertical="12dp"
-        android:background="@drawable/bg_edit"
-        android:id="@+id/edit_title"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_material_title"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="15dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="40"
         android:hint="@string/title"
-        android:paddingHorizontal="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="Autofill,TextFields" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:paddingVertical="12dp"
-        android:background="@drawable/bg_edit"
-        android:id="@+id/edit_desc"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_title"
+            android:maxLength="40"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_materila_desc"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="2dp"
         android:hint="@string/description"
-        android:paddingHorizontal="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_title"
-        tools:ignore="Autofill,TextFields" />
+        app:layout_constraintTop_toBottomOf="@+id/text_material_title">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btn_save"
@@ -47,6 +57,6 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_desc" />
+        app:layout_constraintTop_toBottomOf="@+id/text_materila_desc" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

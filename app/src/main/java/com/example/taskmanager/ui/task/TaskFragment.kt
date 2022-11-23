@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
+import com.example.taskmanager.App
 import com.example.taskmanager.R
 import com.example.taskmanager.databinding.FragmentTaskBinding
 import com.example.taskmanager.data.models.Task
@@ -20,7 +21,7 @@ class TaskFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding=FragmentTaskBinding.inflate(inflater,container,false)
+        binding = FragmentTaskBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -28,19 +29,20 @@ class TaskFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.btnSave.setOnClickListener {
 
-            if(binding.editTitle.text.toString().isNotEmpty()){
+            if (binding.editTitle.text.toString().isNotEmpty()) {
                 saveTasks()
-            }else{
-                binding.editTitle.error=getString(R.string.save_error)
+            } else {
+                binding.editTitle.error = getString(R.string.save_error)
             }
         }
     }
-    fun saveTasks(){
+
+    fun saveTasks() {
         val data = Task(
-            binding.editTitle.text.toString(),
-            binding.editDesc.text.toString()
+            title = binding.editTitle.text.toString(),
+            desc = binding.editDesc.text.toString()
         )
-        setFragmentResult("fr_task", bundleOf("task" to data))
+        App.db.taskDao().insert(data)
         findNavController().navigateUp()
     }
 

@@ -4,14 +4,16 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.taskmanager.App
+import com.example.taskmanager.R
 import com.example.taskmanager.databinding.ItemHomeBinding
 import com.example.taskmanager.data.models.Task
 
-class TaskAdapter() :
+class TaskAdapter(
+    val onLongClick: (position: Int) -> Unit,
+) :
     RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
     private val taskList: ArrayList<Task> = arrayListOf()
-
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         return TaskViewHolder(
@@ -30,18 +32,35 @@ class TaskAdapter() :
     override fun getItemCount(): Int {
         return taskList.size
     }
-    fun addTask(task: Task){
-        taskList.add(0,task)
-        notifyItemChanged(0)
 
+    fun addTasks(newTasks: List<Task>) {
+        this.taskList.clear()
+        this.taskList.addAll(newTasks)
+        notifyDataSetChanged()
     }
+
+    fun deleteTask(task: Task) {
+        App.db.taskDao().delete(task)
+    }
+
+    fun sendTask(position: Int): Task {
+        return taskList[position]
+    }
+
 
     inner class TaskViewHolder(private val binding: ItemHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
-            fun bind(task: Task){
-                binding.textTitle.text=task.title
-                binding.textDesc.text=task.desc
+
+        @SuppressLint("ResourceAsColor")
+        fun bind(task: Task) {
+            itemView.setOnLongClickListener {
+                onLongClick(adapterPosition)
+                return@setOnLongClickListener false
             }
+
+            binding.textTitle.text = task.title
+            binding.textDesc.text = task.desc
+        }
 
 
     }
