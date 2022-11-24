@@ -57,7 +57,7 @@ class HomeFragment : Fragment() {
                 dialogInterface.dismiss()
                 findNavController().navigate(R.id.navigation_home)
             }
-            .setNegativeButton("Cancel") { dialogInterface, _ ->
+            .setNegativeButton("Cancel ") { dialogInterface, _ ->
                 dialogInterface.cancel()
             }
             .show()
