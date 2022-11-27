@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.taskmanager.App
 import com.example.taskmanager.R
+import com.example.taskmanager.data.models.Task
 import com.example.taskmanager.databinding.FragmentHomeBinding
 import com.example.taskmanager.ui.home.adapters.TaskAdapter
 
@@ -16,12 +18,15 @@ class HomeFragment : Fragment() {
     private lateinit var adapter: TaskAdapter
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-
     private lateinit var builder: AlertDialog.Builder
+
+    companion object{
+        const val KEY_FOR_TASK="task"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        adapter = TaskAdapter(this::onLongClick)
+        adapter = TaskAdapter(this::onLongClick,this::onTaskClick)
         builder = AlertDialog.Builder(context)
     }
 
@@ -44,9 +49,9 @@ class HomeFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun onTaskClick(task: Task){
+        findNavController().navigate(R.id.taskFragment, bundleOf( KEY_FOR_TASK to task))
+
     }
 
     private fun onLongClick(position: Int) {
@@ -62,4 +67,11 @@ class HomeFragment : Fragment() {
             }
             .show()
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+
 }

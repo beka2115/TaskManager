@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         pref = Pref(this)
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        if (!pref.isOnBoardingShow()) {
+        if (pref.isOnBoardingShow()) {
             navController.navigate(R.id.onBoardingFragment)
         }
 

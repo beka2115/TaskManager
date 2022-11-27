@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.taskmanager.R
 import com.example.taskmanager.databinding.ItemOnBoardingBinding
 import com.example.taskmanager.data.models.OnBoarding
 
@@ -15,21 +16,25 @@ class OnBoardingAdapter(
 
     private val arrayList = arrayListOf(
         OnBoarding(
-            "https://www.nicepng.com/png/full/190-1906200_hello-png.png",
+            R.raw.task3,
             "It's Task Manager"
         ),
         OnBoarding(
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFgUQqLyqPl08jRUSOCGvE8x7cm5PkaANrJg&usqp=CAU",
+            R.raw.boarding_edit,
             "Edit",
             "Нажмите на Edit, чтобы добавить Task"
         ),
         OnBoarding(
-            "https://i.stack.imgur.com/pAoZ5.png",
+            R.raw.boarding_field,
             "EditText",
             "Заполните обьязательные поля"
         ),
         OnBoarding(
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu_BoBAwc-CqY-cuGDIQsTe3r-bQj95DICag&usqp=CAU",
+            R.raw.boarding_save, "Кнопка Save",
+            "И сохраните нажав на кнопку Save"
+        ),
+        OnBoarding(
+            R.raw.boarding_luck,
             "Пользуйтесь на здоровье"
         )
     )
@@ -53,7 +58,7 @@ class OnBoardingAdapter(
     inner class OnBoardingViewHolder(private val binding: ItemOnBoardingBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(onBoarding: OnBoarding) {
-           binding.textSkip.setOnClickListener {
+            binding.textSkip.setOnClickListener {
                 onClick()
             }
             binding.btnStart.setOnClickListener {
@@ -63,8 +68,10 @@ class OnBoardingAdapter(
             binding.textSkip.isVisible = adapterPosition != arrayList.lastIndex
             binding.titleBoarding.text = onBoarding.title
             binding.textBoarding.text = onBoarding.text
-            Glide.with(binding.imgBoarding).load(onBoarding.image).into(binding.imgBoarding)
-
+            onBoarding.image?.let { binding.lottieOnBoarding.setAnimation(it) }
         }
     }
 }
+
+
+

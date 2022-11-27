@@ -12,29 +12,55 @@ import com.example.taskmanager.App
 import com.example.taskmanager.R
 import com.example.taskmanager.databinding.FragmentTaskBinding
 import com.example.taskmanager.data.models.Task
+import com.example.taskmanager.ui.home.HomeFragment
 
 
 class TaskFragment : Fragment() {
     private lateinit var binding: FragmentTaskBinding
+    private var task:Task?=null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentTaskBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnSave.setOnClickListener {
+        arguments?.let {
+            val value =it.getSerializable(HomeFragment.KEY_FOR_TASK)
+            if(value!=null){
+                task=value as Task
+                binding.editTitle.setText(task?.title.toString())
+                binding.editDesc.setText(task?.desc.toString())
+                if(task!=null){
+                    binding.btnSave.text="Update"
+                }else{
+                    binding.btnSave.text="Save"
+                }
 
+            }
+        }
+
+
+        binding.btnSave.setOnClickListener {
             if (binding.editTitle.text.toString().isNotEmpty()) {
-                saveTasks()
+                if(task!=null){
+                    updateTask()
+                }else saveTasks()
             } else {
                 binding.editTitle.error = getString(R.string.save_error)
             }
         }
+    }
+
+    private fun updateTask() {
+        task?.title=binding.editTitle.text.toString()
+        task?.desc=binding.editDesc.text.toString()
+        task?.let { App.db.taskDao().update(it) }
+        findNavController().navigateUp()
     }
 
     fun saveTasks() {
