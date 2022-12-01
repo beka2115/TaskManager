@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.taskmanager.data.local.Pref
 import com.example.taskmanager.databinding.ActivityMainBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,6 +29,9 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         if (pref.isOnBoardingShow()) {
             navController.navigate(R.id.onBoardingFragment)
+        }
+        if(FirebaseAuth.getInstance().currentUser?.uid==null){
+            navController.navigate(R.id.authFragment)
         }
 
         val appBarConfiguration = AppBarConfiguration(

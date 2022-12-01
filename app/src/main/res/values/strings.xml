@@ -13,5 +13,7 @@
     <string name="name">NAME</string>
     <string name="save_num_error">Заполните поле только целыми числами</string>
     <string name="age">AGE</string>
+    <string name="_996">+996</string>
+    <string name="code">Code</string>
 
 </resources>

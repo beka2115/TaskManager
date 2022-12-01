@@ -10,6 +10,7 @@ import com.example.taskmanager.R
 import com.example.taskmanager.data.local.Pref
 import com.example.taskmanager.databinding.FragmentOnBoardingBinding
 import com.example.taskmanager.ui.home.adapters.OnBoardingAdapter
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_on_boarding.*
 
 import me.relex.circleindicator.CircleIndicator3
@@ -33,8 +34,13 @@ class OnBoardingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         pref= Pref(requireContext())
         adapter = OnBoardingAdapter {
-            pref.saveShowBoarding(true)
-            findNavController().navigateUp()
+
+            if(FirebaseAuth.getInstance().currentUser?.uid==null){
+                findNavController().navigate(R.id.authFragment)
+            }else{
+                pref.saveShowBoarding(true)
+                findNavController().navigateUp()
+            }
         }
         binding.pager.adapter = adapter
         val indicator=view.findViewById<CircleIndicator3>(R.id.circle_indicator)

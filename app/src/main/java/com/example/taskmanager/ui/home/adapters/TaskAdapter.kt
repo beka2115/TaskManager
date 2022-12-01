@@ -48,16 +48,9 @@ class TaskAdapter(
         App.db.taskDao().delete(task)
     }
 
-
-   /* fun taskColor(taskList: List<Task>){
-        for (i in)
-            this.taskList[2].
-    }*/
-
     fun sendTask(position: Int): Task {
         return taskList[position]
     }
-
 
     inner class TaskViewHolder(private val binding: ItemHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -76,11 +69,8 @@ class TaskAdapter(
                     itemView.setBackgroundColor(Color.BLACK)
                     binding.textDesc.setTextColor(Color.WHITE)
                     binding.textTitle.setTextColor(Color.WHITE)
-
                 }
             }
-
-
             itemView
             binding.root.setOnClickListener{
                 onClick(task)
