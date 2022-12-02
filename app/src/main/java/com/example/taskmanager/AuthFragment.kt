@@ -33,12 +33,10 @@ class AuthFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //auth = FirebaseAuth.getInstance()
-        val phoneNum = binding.editPhone.text.toString().trim()
-        val otp = binding.edOtp.text.toString().trim()
         binding.btnGetOtp.setOnClickListener {
-            if (binding.edOtp.text.isNotEmpty()) {
-                sendVerificationCode("+996$phoneNum")
+            if (binding.editPhone.text.isNotEmpty()) {
+                sendVerificationCode(binding.editPhone.text.toString())
+
             } else {
                 Toast.makeText(context, "Введите ваш номер", Toast.LENGTH_LONG).show()
             }
@@ -46,7 +44,7 @@ class AuthFragment : Fragment() {
 
         binding.btnSingUp.setOnClickListener {
             if (binding.edOtp.text.isNotEmpty()) {
-                veryfycationCode(otp)
+                veryfycationCode(binding.edOtp.text.toString())
             } else {
                 Toast.makeText(context, "Введиет код", Toast.LENGTH_LONG).show()
             }
@@ -58,7 +56,7 @@ class AuthFragment : Fragment() {
             }
 
             override fun onVerificationFailed(e: FirebaseException) {
-                Toast.makeText(context, "Auth failed", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Auth failed- $e", Toast.LENGTH_LONG).show()
             }
 
             override fun onCodeSent(
@@ -69,6 +67,7 @@ class AuthFragment : Fragment() {
                 resendToken = token
                 binding.phoneLayout.visibility = View.GONE
                 binding.otpLayout.visibility = View.VISIBLE
+
             }
         }
     }
